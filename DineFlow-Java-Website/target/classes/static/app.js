@@ -1,6 +1,7 @@
 const money = n => '₹' + Number(n || 0).toFixed(2);
 let menu = [], cart = {}, orderType = 'Dine-In', lastOrder = null, staffLogged = false, adminLogged = false, staffFilter = 'ALL';
 const $ = id => document.getElementById(id);
+const API_BASE_URL = "https://dine-flow-6wna.onrender.com"; // Change this to your actual API base URL
 
 async function api(path, opts = {}) {
   const token = localStorage.getItem('dineflow_token');
@@ -8,12 +9,11 @@ async function api(path, opts = {}) {
   if (token) {
     headers['Authorization'] = 'Bearer ' + token;
   }
-  const r = await fetch('/api' + path, {
+  const r = await fetch(API_BASE_URL + '/api' + path, {
     credentials: 'same-origin',
     headers,
     ...opts
   });
-
   let d = {};
   try {
     d = await r.json();
